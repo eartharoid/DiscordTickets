@@ -73,6 +73,8 @@ module.exports = class MessageReactionAddEventListener extends EventListener {
 						.setDescription(i18n('ticket.claimed.description', member.toString()))
 						.setFooter(settings.footer, guild.iconURL())
 				);
+			} else if(r.emoji.name === '❌') {
+				await this.client.tickets.close(channel.id, member.user.id, guild.id);
 			} else {
 				await r.users.remove(u.id);
 			}

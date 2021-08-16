@@ -120,6 +120,8 @@ module.exports = class TicketManager extends EventEmitter {
 				await sent.react('🙌');
 			}
 
+			await sent.react('❌');
+
 			let questions;
 			if (cat_row.opening_questions) {
 				questions = cat_row.opening_questions
