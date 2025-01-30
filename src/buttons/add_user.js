@@ -62,26 +62,26 @@ module.exports = class AddUserButton extends Button {
         }
 
         await interaction.showModal({
-            title: "Add User to Ticket",
+            components: [
+                {
+                    components: [
+                        {
+                            customId: 'username',
+                            label: "Username",
+                            placeholder: "@username or Username#0000",
+                            required: true,
+                            style: 1,
+                            type: 4
+                        }
+                    ],
+                    type: 1
+                }
+            ],
             customId: JSON.stringify({
                 action: 'add_user_modal',
                 ticketId: ticket.id
             }),
-            components: [
-                {
-                    type: 1,
-                    components: [
-                        {
-                            type: 4,
-                            customId: 'username',
-                            label: "Username",
-                            style: 1,
-                            placeholder: "@username or Username#0000",
-                            required: true
-                        }
-                    ]
-                }
-            ]
+            title: "Add User to Ticket"
         });
 
         try {
@@ -98,13 +98,9 @@ module.exports = class AddUserButton extends Button {
             });
 
             const userInput = modalSubmit.fields.getTextInputValue('username');
-            let member;
-
-            // Remove @ and get the username
             const username = userInput.replace(/^@/, '');
 
-            // Try to find the member
-            member = await interaction.guild.members.cache.find(m =>
+            const member = await interaction.guild.members.cache.find(m =>
                 m.user.tag.toLowerCase() === username.toLowerCase() ||
                 m.user.username.toLowerCase() === username.toLowerCase() ||
                 m.displayName.toLowerCase() === username.toLowerCase()
@@ -137,7 +133,6 @@ module.exports = class AddUserButton extends Button {
                 `${interaction.user.tag} added ${member.user.tag} to the ticket`,
             );
 
-            // Send the success message to the channel
             await interaction.channel.send({
                 embeds: [
                     new ExtendedEmbedBuilder()
@@ -149,7 +144,6 @@ module.exports = class AddUserButton extends Button {
                 ],
             });
 
-            // Acknowledge the modal submission
             await modalSubmit.deferUpdate();
 
             logTicketEvent(client, {
@@ -165,8 +159,6 @@ module.exports = class AddUserButton extends Button {
                 userId: interaction.user.id,
             });
         } catch (error) {
-            console.error('Modal error:', error);
-            // Don't attempt to reply if the error is about already acknowledged interactions
             if (!error.code === 40060 && !interaction.replied) {
                 await interaction.followUp({
                     embeds: [
@@ -178,6 +170,7 @@ module.exports = class AddUserButton extends Button {
                     ephemeral: true,
                 });
             }
+            client.log.error(error);
         }
     }
 };
