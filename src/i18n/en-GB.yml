@@ -5,7 +5,7 @@ buttons:
   cancel:
     emoji: ➖
     text: Cancel
-  add_user:
+  add-user:
     text: "Add User"
     emoji: "👥"
   claim:

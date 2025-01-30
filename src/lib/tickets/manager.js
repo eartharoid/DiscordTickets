@@ -510,14 +510,16 @@ module.exports = class TicketManager {
 			);
 		}
 
-		// Add the add_user button
-		rows[0].addComponents(
-			new ButtonBuilder()
-				.setCustomId(JSON.stringify({ action: 'add_user' }))
-				.setStyle(ButtonStyle.Secondary)
-				.setEmoji('👥')
-				.setLabel('Add User'),
-		);
+		// Add the add-user button only if enabled in guild settings
+		if (category.guild.addUserButton) {
+			rows[0].addComponents(
+				new ButtonBuilder()
+					.setCustomId(JSON.stringify({ action: 'add-user' })) // Using hyphen instead of underscore
+					.setStyle(ButtonStyle.Secondary)
+					.setEmoji('👥')
+					.setLabel('Add User'),
+			);
+		}
 
 		if (category.guild.closeButton) {
 			rows[0].addComponents(

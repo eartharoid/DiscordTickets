@@ -7,7 +7,7 @@ module.exports = class AddUserButton extends Button {
     constructor(client, options) {
         super(client, {
             ...options,
-            id: 'add_user',
+            id: 'add-user', // Changed to use hyphen instead of underscore
         });
     }
 
@@ -78,7 +78,7 @@ module.exports = class AddUserButton extends Button {
                 }
             ],
             customId: JSON.stringify({
-                action: 'add_user_modal',
+                action: 'add-user-modal', // Updated to use hyphen
                 ticketId: ticket.id
             }),
             title: "Add User to Ticket"
@@ -89,7 +89,7 @@ module.exports = class AddUserButton extends Button {
                 filter: i => {
                     try {
                         const data = JSON.parse(i.customId);
-                        return data.action === 'add_user_modal' && data.ticketId === ticket.id;
+                        return data.action === 'add-user-modal' && data.ticketId === ticket.id; // Updated to match new action name
                     } catch {
                         return false;
                     }

@@ -101,6 +101,7 @@ CREATE TABLE "guilds" (
     "blocklist" JSONB NOT NULL DEFAULT '[]',
     "claimButton" BOOLEAN NOT NULL DEFAULT false,
     "closeButton" BOOLEAN NOT NULL DEFAULT false,
+	"addUserButton" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "errorColour" TEXT NOT NULL DEFAULT 'Red',
     "footer" TEXT DEFAULT 'Discord Tickets by eartharoid',
