@@ -37,7 +37,7 @@ model ArchivedMessage {
 
 model ArchivedRole {
     archivedUsers ArchivedUser[]
-    colour        String         @default("5865F2") @db.Char(6) // 7289DA 
+    colour        String         @default("5865F2") @db.Char(6) // 7289DA
     createdAt     DateTime       @default(now())
     name          String
     roleId        String         @db.VarChar(19)
@@ -69,6 +69,7 @@ model ArchivedUser {
 }
 
 model Category {
+    blockedRoles    Json       @default("[]")
     channelName     String
     claiming        Boolean    @default(false)
     createdAt       DateTime   @default(now())
