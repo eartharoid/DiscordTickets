@@ -1,0 +1,163 @@
+{
+    "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PANEL",
+    "meta": {
+        "version": "PLCN_v1",
+        "update_url": null
+    },
+    "exported_at": "2025-02-02T14:27:20+00:00",
+    "name": "Discord Tickets Bot",
+    "author": "git@astrid.email",
+    "uuid": "38e959a0-f571-45a4-9288-2a7c960fa3c5",
+    "description": "The official egg for the Discord Tickets bot.",
+    "features": null,
+    "docker_images": {
+        "4.0 (recommended)": "ghcr.io\/discord-tickets\/bot:4.0",
+        "latest": "ghcr.io\/discord-tickets\/bot:latest",
+        "main (unstable)": "ghcr.io\/discord-tickets\/bot:main"
+    },
+    "file_denylist": [],
+    "startup": "\/app\/scripts\/start.sh",
+    "config": {
+        "files": "{\r\n    \".env\": {\r\n        \"parser\": \"properties\",\r\n        \"find\": {\r\n            \"HTTP_PORT\": \"{{server.allocations.default.port}}\"\r\n        }\r\n    }\r\n}",
+        "startup": "{\r\n    \"done\": \"SUCCESS\"\r\n}",
+        "logs": "{}",
+        "stop": "exit"
+    },
+    "scripts": {
+        "installation": {
+            "script": "output_file=\"\/mnt\/server\/.env\"\r\nrandom=$(cat \/dev\/urandom | tr -dc 'a-f0-9' | fold -w 48 | head -n 1)\r\necho \"# Most environment variables can be found on the Startup page\" >> $output_file\r\necho \"ENCRYPTION_KEY=${random}\" >> $output_file\r\necho \"HTTP_EXTERNAL=http:\/\/${SERVER_IP}:${SERVER_PORT}\" >> $output_file\r\necho \"HTTP_PORT=\" >> $output_file\r\necho \"Environment variables written to $output_file\"",
+            "container": "node:18-buster-slim",
+            "entrypoint": "bash"
+        }
+    },
+    "variables": [
+        {
+            "name": "Database Provider",
+            "description": "The type of database you want to use. SQLite is not recommended in production.",
+            "env_variable": "DB_PROVIDER",
+            "default_value": "sqlite",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": [
+                "required",
+                "string",
+                "max:20",
+                "in:sqlite,mysql,postgresql"
+            ],
+            "sort": null
+        },
+        {
+            "name": "Database URL",
+            "description": "Leave blank if using SQLite, but SQLite is not recommended in production.\r\nhttps:\/\/discordtickets.app\/self-hosting\/configuration\/#db_connection_url",
+            "env_variable": "DB_CONNECTION_URL",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": [
+                "nullable",
+                "string",
+                "max:250"
+            ],
+            "sort": null
+        },
+        {
+            "name": "Discord 0Auth2 Secret",
+            "description": "",
+            "env_variable": "DISCORD_SECRET",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": [
+                "nullable",
+                "string",
+                "max:75"
+            ],
+            "sort": null
+        },
+        {
+            "name": "Discord Bot Token",
+            "description": "",
+            "env_variable": "DISCORD_TOKEN",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": [
+                "nullable",
+                "string",
+                "max:100"
+            ],
+            "sort": null
+        },
+        {
+            "name": "Owner IDs",
+            "description": "Comma-separated list of the bot owners' Discord IDs. The default is that of the bot developer and is recommended to leave in if you want them to be able to debug issues for you.",
+            "env_variable": "SUPER",
+            "default_value": "319467558166069248",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": [
+                "nullable",
+                "string",
+                "max:200"
+            ],
+            "sort": null
+        },
+        {
+            "name": "PTERODACTYL",
+            "description": "Internal variable to denote to the bot that it is in a pterodactyl container, required for functionality",
+            "env_variable": "PTERODACTYL",
+            "default_value": "true",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": [
+                "required",
+                "string"
+            ],
+            "sort": null
+        },
+        {
+            "name": "Trust proxies?",
+            "description": "Should proxy headers be trusted?\r\nOnly enable this if running behind a safe reverse proxy.",
+            "env_variable": "HTTP_TRUST_PROXY",
+            "default_value": "false",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": [
+                "required",
+                "string",
+                "max:20",
+                "in:true,false"
+            ],
+            "sort": null
+        },
+        {
+            "name": "Override archive",
+            "description": "If set to \"false\", archives will be forcibly disabled in all servers.",
+            "env_variable": "OVERRIDE_ARCHIVE",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": [
+                "nullable",
+                "string",
+                "max:20"
+            ],
+            "sort": null
+        },
+        {
+            "name": "Auto-publish commands?",
+            "description": "If enabled, commands will be published on startup so you don't need to do it manually.",
+            "env_variable": "PUBLISH_COMMANDS",
+            "default_value": "true",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": [
+                "required",
+                "string",
+                "max:20",
+                "in:true,false"
+            ],
+            "sort": null
+        }
+    ]
+}
