@@ -20,6 +20,7 @@ module.exports.get = fastify => ({
 			select: {
 				categories: {
 					select: {
+						blockedRoles: true,
 						createdAt: true,
 						description: true,
 						discordCategory: true,
