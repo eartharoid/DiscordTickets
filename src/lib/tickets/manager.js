@@ -489,10 +489,10 @@ module.exports = class TicketManager {
 			});
 		}
 
-		const components = new ActionRowBuilder();
+		const rows = [new ActionRowBuilder()];
 
 		if (topic || answers) {
-			components.addComponents(
+			rows[0].addComponents(
 				new ButtonBuilder()
 					.setCustomId(JSON.stringify({ action: 'edit' }))
 					.setStyle(ButtonStyle.Secondary)
@@ -502,7 +502,7 @@ module.exports = class TicketManager {
 		}
 
 		if (category.guild.claimButton && category.claiming) {
-			components.addComponents(
+			rows[0].addComponents(
 				new ButtonBuilder()
 					.setCustomId(JSON.stringify({ action: 'claim' }))
 					.setStyle(ButtonStyle.Secondary)
@@ -511,8 +511,19 @@ module.exports = class TicketManager {
 			);
 		}
 
+		// Add the add-user button only if enabled in guild settings
+		if (category.guild.addUserButton) {
+			rows[0].addComponents(
+				new ButtonBuilder()
+					.setCustomId(JSON.stringify({ action: 'add-user' })) // Using hyphen instead of underscore
+					.setStyle(ButtonStyle.Secondary)
+					.setEmoji('👥')
+					.setLabel('Add User'),
+			);
+		}
+
 		if (category.guild.closeButton) {
-			components.addComponents(
+			rows[0].addComponents(
 				new ButtonBuilder()
 					.setCustomId(JSON.stringify({ action: 'close' }))
 					.setStyle(ButtonStyle.Danger)
@@ -523,13 +534,14 @@ module.exports = class TicketManager {
 
 		const pings = category.pingRoles.map(r => `<@&${r}>`).join(' ');
 		const sent = await channel.send({
-			components: components.components.length >= 1 ? [components] : [],
+			components: rows[0].components.length >= 1 ? [rows[0]] : [],
 			content: getMessage('ticket.opening_message.content', {
 				creator: interaction.user.toString(),
 				staff: pings ? pings + ',' : '',
 			}),
 			embeds,
 		});
+
 		await sent.pin({ reason: 'Ticket opening message' });
 		const pinned = channel.messages.cache.last();
 

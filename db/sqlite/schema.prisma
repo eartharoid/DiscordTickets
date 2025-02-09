@@ -118,6 +118,7 @@ model Guild {
     categories    Category[]
     claimButton   Boolean    @default(false)
     closeButton   Boolean    @default(false)
+	addUserButton Boolean 	 @default(false)
     createdAt     DateTime   @default(now())
     errorColour   String     @default("Red")
     feedback      Feedback[]

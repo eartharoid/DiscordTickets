@@ -5,6 +5,9 @@ buttons:
   cancel:
     emoji: ➖
     text: Cancel
+  add-user:
+    text: "Add User"
+    emoji: "👥"
   claim:
     emoji: 🙌
     text: Claim
@@ -411,6 +414,11 @@ ticket:
   answers:
     no_value: "*No response*"
   claimed: 🙌 {user} has claimed this ticket.
+  add_user:
+    title: "Add User to Ticket"
+    user_id:
+      label: "User ID"
+      placeholder: "Enter the user ID of the member to add"
   close:
     closed:
       description: This channel will be deleted in a few seconds…
