@@ -37,7 +37,7 @@ model ArchivedMessage {
 
 model ArchivedRole {
     archivedUsers ArchivedUser[]
-    colour        String         @default("5865F2") @db.Char(6) // 7289DA 
+    colour        String         @default("5865F2") @db.Char(6) // 7289DA
     createdAt     DateTime       @default(now())
     name          String
     roleId        String         @db.VarChar(19)
@@ -119,6 +119,7 @@ model Guild {
     categories    Category[]
     claimButton   Boolean    @default(false)
     closeButton   Boolean    @default(false)
+	addUserButton Boolean 	 @default(false)
     createdAt     DateTime   @default(now())
     errorColour   String     @default("Red")
     feedback      Feedback[]
