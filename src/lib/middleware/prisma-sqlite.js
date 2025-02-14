@@ -1,6 +1,7 @@
 const jsonFields = [
 	'pingRoles',
 	'requiredRoles',
+	'blockedRoles',
 	'staffRoles',
 	'autoTag',
 	'blocklist',

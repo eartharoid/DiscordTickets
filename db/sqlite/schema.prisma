@@ -68,6 +68,7 @@ model ArchivedUser {
 }
 
 model Category {
+    blockedRoles   String     @default("[]")
     channelName     String
     claiming        Boolean    @default(false)
     createdAt       DateTime   @default(now())

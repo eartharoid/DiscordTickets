@@ -226,6 +226,11 @@ module.exports = class TicketManager {
 			if (blocked) return await sendError('blocked');
 		}
 
+		if (category.blockedRoles.length !== 0) {
+			const blocked = category.blockedRoles.some(r => member.roles.cache.has(r));
+			if (blocked) return await sendError('blocked');
+		}
+
 		if (category.requiredRoles.length !== 0) {
 			const missing = category.requiredRoles.some(r => !member.roles.cache.has(r));
 			if (missing) return await sendError('missing_roles');

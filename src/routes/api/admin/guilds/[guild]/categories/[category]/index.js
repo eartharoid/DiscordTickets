@@ -76,6 +76,7 @@ module.exports.patch = fastify => ({
 		const data = req.body;
 
 		const select = {
+			blockedRoles: true,
 			channelName: true,
 			claiming: true,
 			// createdAt: true,
